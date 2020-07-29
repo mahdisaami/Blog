@@ -11,7 +11,7 @@ class Profile(BaseModel):
     avatar = models.ImageField(upload_to='author/avatars/', blank=True)
     phone_number = models.CharField(_('phone number'), blank=True, max_length=11)
     bio = models.TextField(_('bio'), blank=True)
-    user = models.OneToOneField(User, verbose_name=_('user'), related_name='author', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, verbose_name=_('profile'), related_name='author', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _('Profile')

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'activity.apps.ActivityConfig',
     'author.apps.AuthorConfig',
     'content.apps.ContentConfig',
+    'relation.apps.RelationConfig',
 
 ]
 

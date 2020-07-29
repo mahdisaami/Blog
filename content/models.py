@@ -57,7 +57,7 @@ class Post(BaseModel):
         db_table = 'post'
 
     def __str__(self):
-        return 'ID: {}, User: {}'.format(self.id, self.user.__str__())
+        return 'Title: ({}) User: ({})'.format(self.title, self.user.__str__())
 
 
 class PostTag(BaseModel):
@@ -70,7 +70,7 @@ class PostTag(BaseModel):
         db_table = 'post_tag'
 
     def __str__(self):
-        return f'Title: {self.tag.title}, Post: {self.post.title}'
+        return f'Title: ({self.tag.title}) Post: ({self.post.title})'
 
 
 class Media(BaseModel):
@@ -82,7 +82,6 @@ class Media(BaseModel):
         (VIDEO, 'video')
     )
 
-    user = models.ForeignKey(User, verbose_name=_('user'), related_name='medias', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, verbose_name=_('post'), related_name='medias', on_delete=models.CASCADE)
     media_type = models.PositiveSmallIntegerField(_('media type'), choices=MEDIA_CHOICES, default=PHOTO)
     media_file = models.FileField(_('media file'),

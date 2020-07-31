@@ -14,10 +14,10 @@ def create_user():
 
 class Relation(BaseModel):
     from_user = models.ForeignKey(
-        User, verbose_name=_('from user'), related_name='followers', on_delete=models.SET(create_user)
+        User, verbose_name=_('from user'), related_name='followings', on_delete=models.SET(create_user)
     )
     to_user = models.ForeignKey(
-        User, verbose_name=_('to user'), related_name='followings', on_delete=models.SET(create_user)
+        User, verbose_name=_('to user'), related_name='followers', on_delete=models.SET(create_user)
     )
 
     class Meta:

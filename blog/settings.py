@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rosetta',
+    'rest_framework',
 
     'activity.apps.ActivityConfig',
     'author.apps.AuthorConfig',

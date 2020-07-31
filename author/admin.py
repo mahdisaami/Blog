@@ -15,6 +15,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'first_name', 'last_name', 'email', 'is_active')
     list_filter = ("is_superuser",)
     search_fields = ('username', 'id',)
+    inlines = (ProfileAdminInline,)
 
 
 class ProfileAdmin(admin.ModelAdmin):

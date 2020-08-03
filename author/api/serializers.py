@@ -6,7 +6,7 @@ from author.models import Profile
 User = get_user_model()
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileCreateSerializer(serializers.ModelSerializer):
     user = serializers.SlugRelatedField(slug_field='id', read_only=True)
 
     class Meta:
@@ -15,7 +15,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer()
+    profile = ProfileCreateSerializer()
 
     class Meta:
         model = User
@@ -24,13 +24,13 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         profile = validated_data.pop('profile')
         if profile['phone_number'] is None and profile['avatar'] is None:
-            serializer = ProfileSerializer(data={'phone_number': None, 'avatar': None})
+            serializer = ProfileCreateSerializer(data={'phone_number': None, 'avatar': None})
         elif profile['phone_number'] is None:
-            serializer = ProfileSerializer(data={"avatar": profile["avatar"]})
+            serializer = ProfileCreateSerializer(data={"avatar": profile["avatar"]})
         elif profile['avatar'] is None:
-            serializer = ProfileSerializer(data={'phone_number': profile['phone_number']})
+            serializer = ProfileCreateSerializer(data={'phone_number': profile['phone_number']})
         else:
-            serializer = ProfileSerializer(
+            serializer = ProfileCreateSerializer(
                 data={'phone_number': profile['phone_number'], 'avatar': profile['avatar']}
             )
         instance = super().create(validated_data)

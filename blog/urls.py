@@ -21,5 +21,5 @@ urlpatterns = [
     path('rosetta/', include('rosetta.urls')),
     path('api/user/', include('author.api.urls')),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/post/', include('content.api.urls')),
+    path('api/', include('content.api.urls')),
 ]

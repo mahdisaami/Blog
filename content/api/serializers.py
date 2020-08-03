@@ -1,5 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
-from django.utils.encoding import smart_text
 from rest_framework import serializers
 
 from content.models import Post, Media, PostTag, Tag
@@ -12,7 +10,8 @@ class MediaListSerializer(serializers.ModelSerializer):
         model = Media
         fields = ('media_type', 'media_file')
 
-    def get_media_type(self, obj):
+    @staticmethod
+    def get_media_type(obj):
         return obj.get_media_type_display()
 
 

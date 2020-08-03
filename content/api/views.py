@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView, ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView
 
 from content.api.serializers import PostCreateSerializer, PostListSerializer
 from content.models import Post
@@ -6,7 +6,6 @@ from content.models import Post
 
 class PostCreateListAPIView(ListCreateAPIView):
     serializer_class = PostListSerializer
-
 
     def get_serializer_class(self):
         if self.request.method == "POST":

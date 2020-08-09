@@ -1,7 +1,19 @@
-from rest_framework.generics import CreateAPIView
+from django.contrib.auth import get_user_model
+from rest_framework.generics import CreateAPIView, ListAPIView
 
-from author.api.serializers import RegisterUserSerializer
+from author.api.serializers import RegisterUserSerializer, UserListSerializer
+
+
+User = get_user_model()
 
 
 class RegisterUserAPIView(CreateAPIView):
     serializer_class = RegisterUserSerializer
+
+
+class UserListAPIView(ListAPIView):
+    serializer_class = UserListSerializer
+
+    def get_queryset(self):
+        queryset = User.objects.all()
+        return queryset

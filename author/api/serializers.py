@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from author.models import Profile
+from content.models import Post
 
 User = get_user_model()
 
@@ -12,6 +13,13 @@ class ProfileCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('avatar', 'phone_number', 'user')
+
+
+class ProfileListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Profile
+        fields = ('avatar', 'bio')
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
@@ -37,3 +45,17 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         if serializer.is_valid():
             serializer.save(user=instance)
         return instance
+
+
+class UserListSerializer(serializers.ModelSerializer):
+    profile = ProfileListSerializer()
+    posts_quantity = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ('profile', 'username', 'email', 'posts_quantity')
+
+    def get_posts_quantity(self, obj):
+        post = Post.objects.filter(user=obj)
+        quantity = post.count()
+        return quantity

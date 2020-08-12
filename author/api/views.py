@@ -15,7 +15,7 @@ class UserListAPIView(ListAPIView):
     serializer_class = UserListSerializer
 
     def get_queryset(self):
-        queryset = User.objects.all()
+        queryset = User.objects.all().order_by('-date_joined')
         return queryset
 
 

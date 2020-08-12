@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
 from author.models import Profile
+from content.api.serializers import PostListSerializer
 from content.models import Post
 
 User = get_user_model()
@@ -30,6 +32,8 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         fields = ("username", 'email', 'profile', 'password')
 
     def create(self, validated_data):
+        password = make_password(validated_data['password'])
+        validated_data['password'] = password
         profile = validated_data.pop('profile')
         if profile['phone_number'] is None and profile['avatar'] is None:
             serializer = ProfileCreateSerializer(data={'phone_number': None, 'avatar': None})
@@ -50,10 +54,11 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 class UserListSerializer(serializers.ModelSerializer):
     profile = ProfileListSerializer()
     posts_quantity = serializers.SerializerMethodField()
+    posts = PostListSerializer(many=True)
 
     class Meta:
         model = User
-        fields = ('profile', 'username', 'email', 'posts_quantity')
+        fields = ('profile', 'username', 'email', 'posts_quantity', 'posts')
 
     def get_posts_quantity(self, obj):
         post = Post.objects.filter(user=obj)

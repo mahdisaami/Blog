@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     'rosetta',
     'rest_framework',
+    'django_filters',
 
     'activity.apps.ActivityConfig',
     'author.apps.AuthorConfig',

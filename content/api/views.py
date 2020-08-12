@@ -8,8 +8,7 @@ from content.models import Post
 
 class PostCreateListAPIView(ListCreateAPIView):
     serializer_class = PostListSerializer
-    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, filters.SearchFilter)
-    search_fields = ('title', 'user__username', 'post_tags__tag__title')
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filterset_fields = ('title', 'user__username', 'post_tags__tag__title')
 
     def get_serializer_class(self):

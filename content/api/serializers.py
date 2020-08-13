@@ -49,7 +49,6 @@ class PostCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         tags = validated_data.pop('post_tags')
         instance = super().create(validated_data)
-        # tags = tagged[0]
         for tag in tags:
             serializer = PostTagCreateSerializer(data={'tag': tag['tag']})
             if serializer.is_valid():

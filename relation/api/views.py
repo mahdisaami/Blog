@@ -15,4 +15,3 @@ class FollowUserAPIView(CreateAPIView):
         target_user = self.get_object()
         if target_user is not None:
             serializer.save(from_user=self.request.user, to_user=target_user)
-

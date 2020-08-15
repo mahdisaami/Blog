@@ -36,3 +36,11 @@ class CommentCreateSerializer(serializers.ModelSerializer):
             raise ValidationError(_('Sorry you can not do this'))
         super().create(validated_data)
         return validated_data
+
+
+class CommentListSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(slug_field='username', read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ('text', 'user', 'reply_to', 'created_time')

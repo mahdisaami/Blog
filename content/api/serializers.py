@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from activity.models import Like, Comment
 from content.models import Post, Media, PostTag, Tag
 
 
@@ -60,7 +61,19 @@ class PostListSerializer(serializers.ModelSerializer):
     medias = MediaListSerializer(many=True)
     post_tags = PostTagListSerializer(many=True)
     user = serializers.SlugRelatedField(slug_field='username', read_only=True)
+    likes_quantity = serializers.SerializerMethodField()
+    comments_quantity = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ('title', 'user', 'body', 'post_tags', 'medias')
+        fields = ('title', 'user', 'body', 'post_tags', 'medias', 'likes_quantity', 'comments_quantity')
+
+    def get_likes_quantity(self, obj):
+        queryset = Like.objects.filter(post=obj)
+        quantity = queryset.count()
+        return quantity
+
+    def get_comments_quantity(self,obj):
+        queryset = Comment.objects.filter(post=obj)
+        quantity = queryset.count()
+        return quantity

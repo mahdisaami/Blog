@@ -1,7 +1,8 @@
 from django.urls import path
 
-from activity.api.views import LikeAPIVew
+from activity.api.views import LikeCreateAPIVew, CommentCreateAPIView
 
 urlpatterns = [
-    path('like/post <int:pk>', LikeAPIVew.as_view()),
+    path('like/post<int:pk>', LikeCreateAPIVew.as_view()),
+    path('comment/post<int:pk>', CommentCreateAPIView.as_view()),
 ]

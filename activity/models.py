@@ -25,6 +25,7 @@ class Comment(BaseModel):
     text = models.TextField(_('text'))
     user = models.ForeignKey(User, verbose_name=_('user'), related_name='comments', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, verbose_name=_('post'), related_name='comments', on_delete=models.CASCADE)
+    reply_to = models.ForeignKey('self', related_name='replies', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = 'Comment'

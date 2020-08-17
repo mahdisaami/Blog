@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/content/', include('content.api.urls')),
     path('api/relation/', include('relation.api.urls')),
     path('api/activity/', include('activity.api.urls')),
+    path('rosetta/', include('rosetta.urls')),
 ]

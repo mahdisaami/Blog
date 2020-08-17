@@ -49,7 +49,7 @@ class Post(BaseModel):
     user = models.ForeignKey(User, verbose_name=_('user'), related_name='posts', on_delete=models.CASCADE)
     status = models.PositiveSmallIntegerField(_('status'), choices=STATUS_CHOICES, default=0)
     categories = models.ManyToManyField(Category, verbose_name=_('categories'), related_name='posts')
-    tags = models.ManyToManyField(Tag, verbose_name=_('tags'), related_name='posts', through="PostTag", blank=True)
+    tags = models.ManyToManyField(Tag, verbose_name=_('tags'), related_name='posts', through="PostTag")
 
     class Meta:
         verbose_name = 'Post'

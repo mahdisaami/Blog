@@ -1,4 +1,6 @@
 from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from activity.api.serializers import LikeCreateSerializer, CommentCreateSerializer, CommentListSerializer
 from activity.models import Comment
@@ -18,6 +20,8 @@ class LikeCreateAPIVew(CreateAPIView):
 class CommentCreateAPIView(CreateAPIView):
     serializer_class = CommentCreateSerializer
     queryset = Post.objects.all()
+    authentication_classes = (JSONWebTokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         post = self.get_object()
@@ -28,6 +32,8 @@ class CommentCreateAPIView(CreateAPIView):
 class CommentListAPIView(ListAPIView):
     serializer_class = CommentListSerializer
     queryset = Comment.objects.all().order_by('-created_time')
+    authentication_classes = (JSONWebTokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         queryset = super().get_queryset()

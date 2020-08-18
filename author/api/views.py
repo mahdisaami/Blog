@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from author.api.serializers import RegisterUserSerializer, UserListSerializer
-
+from author.paginations import UserListPagination
 
 User = get_user_model()
 
@@ -20,6 +20,7 @@ class UserListAPIView(ListAPIView):
     filterset_fields = ('username',)
     authentication_classes = (JSONWebTokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
+    pagination_class = UserListPagination
 
     def get_queryset(self):
         queryset = User.objects.all().order_by('-date_joined')

@@ -6,6 +6,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from content.api.serializers import PostCreateSerializer, PostListSerializer
 from content.models import Post
+from content.paginations import PostListPagination
 
 
 class PostCreateListAPIView(ListCreateAPIView):
@@ -14,6 +15,7 @@ class PostCreateListAPIView(ListCreateAPIView):
     filterset_fields = ('title', 'user__username', 'post_tags__tag__title')
     authentication_classes = (JSONWebTokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
+    pagination_class = PostListPagination
 
     def get_serializer_class(self):
         if self.request.method == "POST":

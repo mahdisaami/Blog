@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.hashers import make_password
 from django.core.management import BaseCommand
 
 from activity.models import Comment

@@ -5,6 +5,7 @@ from rest_framework import serializers
 from author.models import Profile
 from content.api.serializers import PostListSerializer
 from content.models import Post
+from relation.models import Relation
 
 User = get_user_model()
 
@@ -55,12 +56,32 @@ class UserListSerializer(serializers.ModelSerializer):
     profile = ProfileListSerializer()
     posts_quantity = serializers.SerializerMethodField()
     posts = PostListSerializer(many=True)
+    followers = serializers.SerializerMethodField()
+    followings = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('profile', 'username', 'email', 'posts_quantity', 'posts')
+        fields = ('profile', 'username', 'email', 'followers', 'followings', 'posts_quantity', 'posts', )
 
     def get_posts_quantity(self, obj):
         post = Post.objects.filter(user=obj)
         quantity = post.count()
         return quantity
+
+    def get_followers(self, obj):
+        followers = Relation.objects.filter(to_user=obj)
+        quantity = followers.count()
+        return quantity
+
+    def get_followings(self, obj):
+        followings = Relation.objects.filter(from_user=obj)
+        quantity = followings.count()
+        return quantity
+
+
+class UserLightSerializer(serializers.ModelSerializer):
+    profile = ProfileListSerializer()
+
+    class Meta:
+        model = User
+        fields = ('profile', 'username', 'email')

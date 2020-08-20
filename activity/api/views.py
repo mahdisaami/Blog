@@ -22,7 +22,7 @@ class CommentCreateAPIView(CreateAPIView):
     serializer_class = CommentCreateSerializer
     queryset = Post.objects.all()
     authentication_classes = (JSONWebTokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         post = self.get_object()
@@ -34,7 +34,7 @@ class CommentListAPIView(ListAPIView):
     serializer_class = CommentListSerializer
     queryset = Comment.objects.all().order_by('-created_time')
     authentication_classes = (JSONWebTokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     pagination_class = CommentListPagination
 
     def get_queryset(self):

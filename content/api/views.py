@@ -1,6 +1,5 @@
 import django_filters
-from rest_framework import filters
-from rest_framework.generics import ListCreateAPIView, ListAPIView
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
@@ -14,7 +13,7 @@ class PostCreateListAPIView(ListCreateAPIView):
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filterset_fields = ('title', 'user__username', 'post_tags__tag__title')
     authentication_classes = (JSONWebTokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     pagination_class = PostListPagination
 
     def get_serializer_class(self):
@@ -25,4 +24,3 @@ class PostCreateListAPIView(ListCreateAPIView):
     def get_queryset(self):
         queryset = Post.objects.filter(status=1).order_by('-created_time')
         return queryset
-

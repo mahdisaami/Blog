@@ -19,7 +19,7 @@ class UserListAPIView(ListAPIView):
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filterset_fields = ('username',)
     authentication_classes = (JSONWebTokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     pagination_class = UserListPagination
 
     def get_queryset(self):
@@ -33,5 +33,4 @@ class UserRetrieveAPIView(RetrieveAPIView):
     lookup_field = 'username'
     queryset = User.objects.all()
     authentication_classes = (JSONWebTokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
-
+    permission_classes = (IsAuthenticated,)

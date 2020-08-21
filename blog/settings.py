@@ -14,6 +14,8 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import datetime
 
+from kombu import Queue, Exchange
+
 from blog.local_settings import SECRET_KEY, DEBUG, ALLOWED_HOSTS, DB
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -98,6 +100,12 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -148,6 +156,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Locale configurations
 LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
+
+CELERY_BROKER_URL = 'redis://localhost:6379/10'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/10'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Tehran'
+CELERY_ENABLE_UTC = True
+CELERY_QUEUES = (
+    Queue('high', Exchange('high'), routing_key='high'),
+    Queue('low', Exchange('low'), routing_key='low')
+)
+CELERY_DEFAULT_QUEUE = 'low'
 
 
 JWT_AUTH = {

@@ -1,8 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
+from django.utils import timezone
+from kombu import Queue
 from rest_framework import serializers
 
 from author.models import Profile
+from author.tasks import send_welcoming_message
 from content.api.serializers import PostListSerializer
 from content.models import Post
 from relation.models import Relation
@@ -47,6 +50,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
                 data={'phone_number': profile['phone_number'], 'avatar': profile['avatar']}
             )
         instance = super().create(validated_data)
+        send_welcoming_message.apply_async([validated_data['username'], ], Queue='low')
         if serializer.is_valid():
             serializer.save(user=instance)
         return instance

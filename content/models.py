@@ -45,7 +45,7 @@ class Post(BaseModel):
     )
 
     title = models.CharField(_('title'), max_length=16)
-    body = models.TextField(_('body'), blank=True)
+    body = models.TextField(_('body'), null=True)
     user = models.ForeignKey(User, verbose_name=_('user'), related_name='posts', on_delete=models.CASCADE)
     status = models.PositiveSmallIntegerField(_('status'), choices=STATUS_CHOICES, default=0)
     categories = models.ManyToManyField(Category, verbose_name=_('categories'), related_name='posts')

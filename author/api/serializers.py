@@ -15,6 +15,8 @@ User = get_user_model()
 
 class ProfileCreateSerializer(serializers.ModelSerializer):
     user = serializers.SlugRelatedField(slug_field='id', read_only=True)
+    avatar = serializers.CharField(allow_null=True)
+    phone_number = serializers.CharField(allow_null=True)
 
     class Meta:
         model = Profile

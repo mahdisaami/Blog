@@ -16,7 +16,7 @@ class FollowUserAPIView(CreateAPIView):
     lookup_field = 'username'
     queryset = User.objects.all()
     authentication_classes = (JSONWebTokenAuthentication,)
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         target_user = self.get_object()

@@ -6,7 +6,7 @@ chardet==3.0.4
 Django==2.2
 django-filter==2.3.0
 django-rosetta==0.9.4
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 idna==2.10
 importlib-metadata==1.7.0

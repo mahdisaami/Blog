@@ -16,7 +16,7 @@ Markdown==3.2.2
 Pillow==7.2.0
 polib==1.1.0
 psycopg2-binary==2.8.5
-PyJWT==1.7.1
+PyJWT==2.4.0
 python-memcached==1.59
 pytz==2020.1
 redis==3.5.3
